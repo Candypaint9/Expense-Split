@@ -19,7 +19,7 @@ import {
 function Navbar({ activeTab, setActiveTab }) {
   return (
     <nav className="bg-green-600 text-white p-4 flex justify-between items-center">
-      <div className="text-2xl font-bold">SplitMate</div>
+      <div className="text-2xl font-bold">Expense Split</div>
       <div className="flex space-x-6">
         <button 
           className={`flex items-center ${
