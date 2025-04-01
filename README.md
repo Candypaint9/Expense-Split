@@ -1,1 +1,1 @@
-# WebChat
+Expense-split project
