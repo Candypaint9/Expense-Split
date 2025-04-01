@@ -8,7 +8,7 @@ import { GrTransaction } from "react-icons/gr";
 function navbar() {
   return (
     <div>
-      <div className=" fixed z-[999] w-full px-5 flex justify-between bg-green-500 h-15 text-lg font-['NeueMontreal-Regular'] items-center">
+      <div className=" fixed z-[999] backdrop-blur-lg w-full px-5 flex justify-between bg-green-500 h-15 text-lg font-['NeueMontreal-Regular'] items-center">
         <div className="font-bold text-2xl">Expense Split</div>
         <div className="flex space-x-10 items-center">
           <a href="/groups" className="flex items-center gap-1">
