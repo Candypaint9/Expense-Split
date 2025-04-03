@@ -12,7 +12,7 @@ function landing() {
       ],
     },
     {
-      name: "Europe Trip",
+      name: "Trip",
       totalExpenses: 2500,
       members: [
         { name: "Samir", amount: 800, isPositive: false },
@@ -20,7 +20,7 @@ function landing() {
       ],
     },
     {
-      name: "Work Lunch",
+      name: "Work",
       totalExpenses: 450,
       members: [
         { name: "Kalp", amount: 150, isPositive: false },
