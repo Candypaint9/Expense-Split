@@ -1,9 +1,11 @@
 import React from 'react'
-import Navbar from './components/navbar'
+import Navbar from './components/Navbar'
+import Landing from './components/landing'
 function App() {
   return (
-    <div className=' h-screen bg-zinc-900'>
+    <div className=' h-screen bg-gray-50'>
       <Navbar/>
+      <Landing/>
     </div>
   )
 }
