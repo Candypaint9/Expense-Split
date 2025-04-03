@@ -23,7 +23,7 @@ function navbar() {
             <CgProfile />
             Profile
           </a>
-          <a href="/about" className="flex items-center gap-1">
+          <a href="/activity" className="flex items-center gap-1">
             <GrTransaction />
             Activity
           </a>
