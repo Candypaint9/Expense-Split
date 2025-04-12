@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.17",
+    "axios": "^1.8.4",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "mongoose": "^8.13.2",
@@ -30,7 +31,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
-    "vite": "^6.2.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "vite": "^6.2.0"
   }
 }
