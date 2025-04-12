@@ -29,7 +29,7 @@ function landing() {
     },
   ];
   return (
-    <div>
+    <div className=' h-screen bg-gray-50'>
       <main className="bg-gray-50 flex-grow p-6">
         <div className="bg-white mt-20 rounded-md p-6 mb-6 shadow-sm">
           <h1 className="text-2xl font-bold">
