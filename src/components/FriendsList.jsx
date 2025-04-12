@@ -7,48 +7,48 @@ function FriendsPage() {
   const rawFriendsData = [
     { 
       id: 1, 
-      name: "Bob", 
-      email: "bob@example.com", 
+      name: "Kalp", 
+      email: "kalp@gmail.com", 
       owesYou: 320.25, 
       youOwe: 100.00,
       image: "/api/placeholder/40/40"
     },
     { 
       id: 2, 
-      name: "Charlie", 
-      email: "charlie@example.com", 
+      name: "Shah", 
+      email: "kalp@gmail.com", 
       owesYou: 0, 
       youOwe: 212.25,
       image: "/api/placeholder/40/40"
     },
     { 
       id: 3, 
-      name: "David", 
-      email: "david@example.com", 
+      name: "Aditya", 
+      email: "kalp@gmail.com", 
       owesYou: 800.25, 
       youOwe: 0,
       image: "/api/placeholder/40/40"
     },
     { 
       id: 4, 
-      name: "Emma", 
-      email: "emma@example.com", 
+      name: "Advait", 
+      email: "kalp@gmail.com", 
       owesYou: 1700.50, 
       youOwe: 0,
       image: "/api/placeholder/40/40"
     },
     { 
       id: 5, 
-      name: "John", 
-      email: "john@example.com", 
+      name: "Sameer", 
+      email: "kalp@gmail.com", 
       owesYou: 150.08, 
       youOwe: 0,
       image: "/api/placeholder/40/40"
     },
     { 
       id: 6, 
-      name: "Sarah", 
-      email: "sarah@example.com", 
+      name: "Aayush", 
+      email: "kalp@gmail.com", 
       owesYou: 0, 
       youOwe: 300.17,
       image: "/api/placeholder/40/40"
