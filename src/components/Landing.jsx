@@ -1,5 +1,7 @@
 import React from "react";
 import { FiPlus } from "react-icons/fi";
+import axios from 'axios';
+
 function Landing() {
   const expenseGroups = [
     {
@@ -28,6 +30,7 @@ function Landing() {
       ],
     },
   ];
+  
   return (
     <div className=' h-screen bg-gray-50'>
       <main className="bg-gray-50 flex-grow p-6">
