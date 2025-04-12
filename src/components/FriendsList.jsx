@@ -1,11 +1,170 @@
-import React from "react";
+import React, { useState } from "react";
 
 function FriendsPage() {
-    return (
-        <div className="flex justify-center items-center h-screen">
-            <p className="text-center">This is friends list page</p>
-        </div>
-    );
-}
+  const [searchTerm, setSearchTerm] = useState("");
   
+  // Dummy data for friends
+  const friendsData = [
+    { 
+      id: 1, 
+      name: "Aditya", 
+      email: "Shah@gmail.com", 
+      owesYou: 320.25, 
+      youOwe: 100.00,
+      image: "/api/placeholder/40/40"
+    },
+    { 
+      id: 2, 
+      name: "Mehrotra", 
+      email: "Shah@gmail.com", 
+      owesYou: 0, 
+      youOwe: 212.25,
+      image: "/api/placeholder/40/40"
+    },
+    { 
+      id: 3, 
+      name: "Aayush", 
+      email: "Shah@gmail.com", 
+      owesYou: 800.25, 
+      youOwe: 0,
+      image: "/api/placeholder/40/40"
+    },
+    { 
+      id: 4, 
+      name: "Sheth", 
+      email: "Shah@gmail.com", 
+      owesYou: 1700.50, 
+      youOwe: 0,
+      image: "/api/placeholder/40/40"
+    },
+    { 
+      id: 5, 
+      name: "Kalp", 
+      email: "Shah@gmail.com", 
+      owesYou: 150.08, 
+      youOwe: 0,
+      image: "/api/placeholder/40/40"
+    },
+    { 
+      id: 6, 
+      name: "Shah", 
+      email: "Shah@gmail.com", 
+      owesYou: 0, 
+      youOwe: 300.17,
+      image: "/api/placeholder/40/40"
+    },
+  ];
+
+  // Filter friends based on search term
+  const filteredFriends = friendsData.filter(friend => 
+    friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-100">
+      {/* Main Content */}
+      <div className="container mx-auto py-8 px-4">
+        <div className="bg-white rounded-lg mt-20 shadow-md p-6 mb-6">
+          <h1 className="text-2xl font-bold mb-2">Hi, bhai! 👋</h1>
+          <p className="text-gray-600">Here are your friends</p>
+        </div>
+
+        {/* Friends Management */}
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold">My Friends</h2>
+          <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+            </svg>
+            Add Friend
+          </button>
+        </div>
+
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search friends..."
+              className="w-full p-3 border border-gray-300 rounded-md pl-10 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <div className="absolute left-3 top-3 text-gray-400">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Friends List */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredFriends.map(friend => (
+            <div key={friend.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  {/* <img 
+                    src={friend.image} 
+                    alt={friend.name} 
+                    className="w-12 h-12 rounded-full mr-4" 
+                  /> */}
+                  <div>
+                    <h3 className="font-bold text-lg">{friend.name}</h3>
+                    <p className="text-gray-500 text-sm">{friend.email}</p>
+                  </div>
+                </div>
+                <div className="flex space-x-2">
+                  <button className="text-gray-500 hover:text-green-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                  </button>
+                  <button className="text-gray-500 hover:text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                {friend.owesYou > 0 && (
+                  <p className="text-green-600 font-semibold">
+                    {friend.name} owes you: ${friend.owesYou.toFixed(2)}
+                  </p>
+                )}
+                {friend.youOwe > 0 && (
+                  <p className="text-red-600 font-semibold">
+                    You owe {friend.name}: ${friend.youOwe.toFixed(2)}
+                  </p>
+                )}
+                {friend.owesYou === 0 && friend.youOwe === 0 && (
+                  <p className="text-gray-600">You are settled up</p>
+                )}
+              </div>
+              
+              <div className="mt-4 flex space-x-2">
+                <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">
+                  Add Expense
+                </button>
+                <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded text-sm">
+                  Settle Up
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* If no friends are found */}
+        {filteredFriends.length === 0 && (
+          <div className="bg-white rounded-lg shadow-md p-6 text-center">
+            <p className="text-gray-600">No friends found matching "{searchTerm}"</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default FriendsPage;
