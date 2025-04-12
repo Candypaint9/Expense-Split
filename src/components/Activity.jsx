@@ -8,4 +8,4 @@ function activity() {
     );
 }
   
-  export default activity;
+export default activity;

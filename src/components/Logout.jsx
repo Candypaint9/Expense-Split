@@ -8,4 +8,4 @@ function logoutPage() {
     );
 }
   
-  export default logoutPage;
+export default logoutPage;

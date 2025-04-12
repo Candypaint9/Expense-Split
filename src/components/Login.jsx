@@ -1,11 +1,11 @@
 import React from "react";
 
-function profile() {
+function loginPage() {
     return (
         <div className="flex justify-center items-center h-screen">
-            <p className="text-center">This is profile page</p>
+            <p className="text-center">This is login page</p>
         </div>
     );
 }
-  
-export default profile;
+
+export default loginPage;

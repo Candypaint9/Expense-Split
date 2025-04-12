@@ -8,4 +8,4 @@ function friendsPage() {
     );
 }
   
-  export default friendsPage;
+export default friendsPage;

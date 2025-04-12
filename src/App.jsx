@@ -5,6 +5,7 @@ import FriendsPage from './components/FriendsList';
 import Profile from './components/Profile';
 import Activity from './components/Activity';
 import LogoutPage from './components/Logout';
+import LoginPage from './components/Login';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -15,6 +16,7 @@ function App() {
             <Navbar/>
             <Routes>
                 <Route path="/" element={<Landing/>} />
+                <Route path="/login" element={<LoginPage/>} />
                 <Route path="/friends" element={<FriendsPage/>} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/activity" element={<Activity/>} />
