@@ -1,6 +1,6 @@
 import React from "react";
 
-function friendsPage() {
+function FriendsPage() {
     return (
         <div className="flex justify-center items-center h-screen">
             <p className="text-center">This is friends list page</p>
@@ -8,4 +8,4 @@ function friendsPage() {
     );
 }
   
-export default friendsPage;
+export default FriendsPage;

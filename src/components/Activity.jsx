@@ -1,6 +1,6 @@
 import React from "react";
 
-function activity() {
+function Activity() {
     return (
         <div className="flex justify-center items-center h-screen">
             <p className="text-center">This is activity page</p>
@@ -8,4 +8,4 @@ function activity() {
     );
 }
   
-export default activity;
+export default Activity;

@@ -1,6 +1,6 @@
 import React from "react";
 
-function logoutPage() {
+function LogoutPage() {
     return (
         <div className="flex justify-center items-center h-screen">
             <p className="text-center">Why logout :(</p>
@@ -8,4 +8,4 @@ function logoutPage() {
     );
 }
   
-export default logoutPage;
+export default LogoutPage;

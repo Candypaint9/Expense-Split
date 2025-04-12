@@ -1,6 +1,6 @@
 import React from "react";
 
-function loginPage() {
+function LoginPage() {
     return (
         <div className="flex justify-center items-center h-screen">
             <p className="text-center">This is login page</p>
@@ -8,4 +8,4 @@ function loginPage() {
     );
 }
 
-export default loginPage;
+export default LoginPage;

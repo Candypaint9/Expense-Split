@@ -1,6 +1,6 @@
 import React from "react";
 import { FiPlus } from "react-icons/fi";
-function landing() {
+function Landing() {
   const expenseGroups = [
     {
       name: "Roommates",
@@ -87,4 +87,4 @@ function landing() {
   );
 }
 
-export default landing;
+export default Landing;

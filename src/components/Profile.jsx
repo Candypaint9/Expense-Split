@@ -1,6 +1,6 @@
 import React from "react";
 
-function profile() {
+function Profile() {
     return (
         <div className="flex justify-center items-center h-screen">
             <p className="text-center">This is profile page</p>
@@ -8,4 +8,4 @@ function profile() {
     );
 }
   
-export default profile;
+export default Profile;
