@@ -15,7 +15,7 @@ function Landing() {
       name: "Trip",
       totalExpenses: 2500,
       members: [
-        { name: "Samir", amount: 800, isPositive: false },
+        { name: "Sameer", amount: 800, isPositive: false },
         { name: "Aditya", amount: 1700, isPositive: true },
       ],
     },
@@ -24,7 +24,7 @@ function Landing() {
       totalExpenses: 450,
       members: [
         { name: "Kalp", amount: 150, isPositive: false },
-        { name: "Samir", amount: 300, isPositive: true },
+        { name: "Sameer", amount: 300, isPositive: true },
       ],
     },
   ];
