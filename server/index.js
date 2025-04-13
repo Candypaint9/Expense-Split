@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import Group from './models/group.js';
 
-const PORT = 6969;
+const PORT = 5000;
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/yourDBName')
+mongoose.connect('mongodb://localhost:27017/splitwise')
     .then(() => console.log("MongoDB connected"))
     .catch(err => console.error("MongoDB connection error:", err));
 
