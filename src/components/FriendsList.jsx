@@ -76,7 +76,7 @@ function FriendsPage() {
       {/* Main Content */}
       <div className="container mx-auto py-8 px-4">
         <div className="bg-white rounded-lg mt-20 shadow-md p-6 mb-6">
-          <h1 className="text-2xl font-bold mb-2">Hi, Alice! 👋</h1>
+          <h1 className="text-2xl font-bold mb-2">Hi, Aditya! </h1>
           <p className="text-gray-600">Here are your friends</p>
         </div>
 
