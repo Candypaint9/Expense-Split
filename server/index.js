@@ -12,11 +12,11 @@ mongoose.connect('mongodb://localhost:27017/splitwise')
     .then(() => console.log("MongoDB connected"))
     .catch(err => console.error("MongoDB connection error:", err));
 
-app.get('/api/groups', async (req, res) => {
+app.get('/api/groupCards', async (req, res) => {
     try {
         const groups = await Group.find();
         res.json(groups);
-    } catch (err) {
+    } catch (err) { 
         res.status(500).json({ error: 'Failed to fetch groups' });
     }
 });
