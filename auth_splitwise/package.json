@@ -1,7 +1,6 @@
 {
   "name": "auth_splitwise",
   "version": "1.0.0",
-  "description": "",
   "license": "ISC",
   "author": "",
   "type": "commonjs",
@@ -21,5 +20,7 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }

@@ -23,7 +23,7 @@ mongoose
     console.log(err);
   });
 //applying the checkuser middleware to all the get requests
-app.get('*',checkUser);
+// app.get('*',checkUser);
 app.get("/", (req, res) => {
   res.render("home");
 });
