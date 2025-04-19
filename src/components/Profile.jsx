@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function Profile() {
-  // Sample user data - in a real app, this would come from your state management or API
+  // Sample user data - Will fetch from API later
   const [user, setUser] = useState({
     name: "Name",
     email: "user@example.com",

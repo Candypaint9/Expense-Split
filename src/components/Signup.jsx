@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-function LoginPage() {
+function SignupPage() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   const handleSubmit = e => {
     e.preventDefault()
-    // TODO: call your auth API here…
+    // TODO: call your signup API here…
     // on success:
-    navigate('/')    // or wherever you want to land after login
+    navigate('/login')
   }
 
   return (
@@ -19,7 +20,16 @@ function LoginPage() {
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md"
       >
-        <h2 className="text-2xl font-semibold mb-4 text-green-600">Log In</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-green-600">Sign Up</h2>
+
+        <label className="block mb-2 text-gray-700">Name</label>
+        <input
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          required
+          className="w-full px-3 py-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
 
         <label className="block mb-2 text-gray-700">Email</label>
         <input
@@ -43,13 +53,13 @@ function LoginPage() {
           type="submit"
           className="w-full py-2 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition"
         >
-          Log In
+          Create Account
         </button>
 
         <p className="mt-4 text-center text-gray-600">
-          Don’t have an account?{' '}
-          <Link to="/signup" className="text-green-600 hover:underline">
-            Sign Up
+          Already have an account?{' '}
+          <Link to="/login" className="text-green-600 hover:underline">
+            Log In
           </Link>
         </p>
       </form>
@@ -57,4 +67,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage
+export default SignupPage
