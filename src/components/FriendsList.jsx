@@ -1,61 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiPlus, FiSearch, FiEdit2, FiTrash2 } from "react-icons/fi";
+import axios from 'axios'
 
 function FriendsPage() {
     const [searchTerm, setSearchTerm] = useState("");
 
-    // Dummy data for friends with raw values
-    const rawFriendsData = [
-        {
-            id: 1,
-            name: "Kalp",
-            email: "kalp@gmail.com",
-            owesYou: 320.25,
-            youOwe: 100.0,
-            image: "/api/placeholder/40/40"
-        },
-        {
-            id: 2,
-            name: "Shah",
-            email: "kalp@gmail.com",
-            owesYou: 0,
-            youOwe: 212.25,
-            image: "/api/placeholder/40/40"
-        },
-        {
-            id: 3,
-            name: "Aditya",
-            email: "kalp@gmail.com",
-            owesYou: 800.25,
-            youOwe: 0,
-            image: "/api/placeholder/40/40"
-        },
-        {
-            id: 4,
-            name: "Advait",
-            email: "kalp@gmail.com",
-            owesYou: 1700.5,
-            youOwe: 0,
-            image: "/api/placeholder/40/40"
-        },
-        {
-            id: 5,
-            name: "Sameer",
-            email: "kalp@gmail.com",
-            owesYou: 150.08,
-            youOwe: 0,
-            image: "/api/placeholder/40/40"
-        },
-        {
-            id: 6,
-            name: "Aayush",
-            email: "kalp@gmail.com",
-            owesYou: 0,
-            youOwe: 300.17,
-            image: "/api/placeholder/40/40"
-        },
-    ];
+    const [rawFriendsData, setRawFriendsData] = useState([]);
+    useEffect(() => {
+        axios.get('/api/friends')
+        .then((response) => setRawFriendsData(response.data))
+        .catch((error) => console.error("Error fetching friends:", error));
+    }, []);
 
+    
     // Process friend data to calculate net balance
     const friendsData = rawFriendsData.map(friend => {
         // Calculate net balance (positive means they owe you, negative means you owe them)
