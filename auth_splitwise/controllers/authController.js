@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const SECRET = require("../.gitignore/secret");
+const SECRET = require("../secret");
 
 //handle errors
 const handleErrors = (err) => {
