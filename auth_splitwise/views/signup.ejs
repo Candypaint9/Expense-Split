@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <h2>Sign up</h2>
+      <label for="name">Name</label>
+      <input type="text" name="namefield" required />
+      <div class="name error"></div>
+      <label for="email">Email</label>
+      <input type="text" name="emailfield" required />
+      <div class="email error"></div>
+      <label for="password">Password</label>
+      <input type="password" name="passwordfield" required />
+      <div class="password error"></div>
+      <button>Sign up</button>
+    </form>
+    <script>
+      const form = document.querySelector("form");
+      const nameError = document.querySelector(".name.error");
+      const emailError = document.querySelector(".email.error");
+      const passwordError = document.querySelector(".password.error");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); //prevent the default reloading after submit
+
+        //reset error containers
+        nameError.textContent = "";
+        emailError.textContent = "";
+        passwordError.textContent = "";
+
+        //get the values
+        const name = form.namefield.value;
+        const email = form.emailfield.value;
+        const password = form.passwordfield.value;
+        try {
+          const res = await fetch("/signup", {
+            method: "POST",
+            body: JSON.stringify({ name, email, password }),
+            headers: { "Content-Type": "application/json" },
+          });
+          //now manipulating the response we got from backend(Either user.id or errors)
+          const data = await res.json();
+          console.log(data);
+          if (data.errors) {
+            nameError.textContent = data.errors.name;
+            emailError.textContent = data.errors.email;
+            passwordError.textContent = data.errors.password;
+          }
+          if(data.user){
+            location.assign('/');//redirect to homepage if sign up completed 
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    </script>
+  </body>
+</html>
