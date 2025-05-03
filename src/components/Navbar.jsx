@@ -50,7 +50,7 @@ function Navbar({ isLoggedIn }) {
 
     return (
         <div>
-            <div className="fixed z-[999] backdrop-blur-lg w-full px-5 flex justify-between bg-green-500 h-15 text-lg font-['NeueMontreal-Regular'] items-center text-white py-3">
+            <div className="fixed z-[999] backdrop-blur-lg w-full px-5 flex justify-between bg-green-500 h-15 text-lg font-['Inter'] items-center text-white py-3">
                 <div className="font-bold text-2xl">Expense Split</div>
                 <div className="flex space-x-10 items-center">
                     <Link 
