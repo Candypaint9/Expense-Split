@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
 import axios from 'axios';
 
-function Landing() {
-
+function Landing({ userData }) {
     const [expenseGroups, setExpenseGroups] = useState([]);
 
     useEffect(() => {
@@ -17,7 +16,7 @@ function Landing() {
             <main className="bg-gray-50 flex-grow p-6">
                 <div className="bg-white mt-20 rounded-md p-6 mb-6 shadow-sm">
                     <h1 className="text-2xl font-bold">
-                        Hi, Name{" "}
+                        Hi, {userData?.name || "Guest"}{" "}
                         <span role="img" aria-label="wave">
                             👋
                         </span>
@@ -30,7 +29,7 @@ function Landing() {
                         <h2 className="text-xl font-bold">My Groups</h2>
                         <a
                             href="./new_group"
-                            className="bg-green-500 text-white px-4 py-2 rounded-md flex gap-1.5 items-center justify-center"
+                            className="bg-green-500 text-white px-4 py-2 rounded-md flex gap-1.5 items-center justify-center cursor-pointer hover:bg-green-600"
                         >
                             <FiPlus />
                             Create Group

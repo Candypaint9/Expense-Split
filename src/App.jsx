@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
@@ -10,19 +10,29 @@ import LoginPage from './components/Login'
 import SignupPage from './components/Signup'        
 
 function App() {
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    upiId: "",
+    qrCode: null,
+    balance: {
+      totalOwed: 0,
+      totalOwe: 0
+    }
+  });
+
   return (
     <Router>
-      {/* Pass isLoggedIn dynamically later */}
       <Navbar isLoggedIn={false} />
-
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing userData={userData} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />  
-        <Route path="/friends" element={<FriendsPage />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/friends" element={<FriendsPage userData={userData} />} />
+        <Route path="/profile" element={<Profile userData={userData} setUserData={setUserData} />} />
         <Route path="/activity" element={<Activity />} />
-        <Route path="/logout" element={<Landing />} />
+        <Route path="/logout" element={<Landing userData={userData} />} />
       </Routes>
     </Router>
   )
