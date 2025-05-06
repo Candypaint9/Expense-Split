@@ -18,7 +18,7 @@ function LoginPage() {
 
             console.log("Login success:", res.data.message);
             alert("Login successful!");
-            navigate('/dashboard'); // or wherever
+            navigate('/dashboard');
         } catch (err) {
             if (err.response) {
                 console.error("Login error:", err.response.data.message || err.response.data.error);

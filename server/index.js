@@ -67,14 +67,23 @@ app.post('/api/login', async (req, res) => {
         if (!user)
             return res.status(400).json({ message: 'Invalid email or password' });
 
-        const isMatch = await bcrypt.compare(password, user.password);;
-
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
             return res.status(400).json({ message: 'Invalid email or password' });
 
-        // You could generate a JWT here if you want auth sessions
-        res.status(200).json({ message: 'Login successful', userId: user._id });
+        // Create JWT token
+        const token = jwt.sign(
+            { userId: user._id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '3h' }
+        );
+
+        res.status(200).json({
+            message: 'Login successful',
+            token,
+            userId: user._id
+        });
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
-});  
+});
