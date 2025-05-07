@@ -4,6 +4,10 @@ import cors from 'cors';
 import Group from './models/group.js';
 import User from './models/user.js';
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const PORT = 5000;
 const app = express();
@@ -70,6 +74,8 @@ app.post('/api/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
             return res.status(400).json({ message: 'Invalid email or password' });
+        
+        // console.log(JWT_SECRET, user._id,user.email);
 
         // Create JWT token
         const token = jwt.sign(
@@ -84,6 +90,9 @@ app.post('/api/login', async (req, res) => {
             userId: user._id
         });
     } catch (err) {
+        // console.log(email,password);
+        // const user = await User.findOne({ email });
+        // console.log(user);
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 });
