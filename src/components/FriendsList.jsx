@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FiPlus, FiSearch, FiEdit2, FiTrash2 } from "react-icons/fi";
 import axios from 'axios'
 
-function FriendsPage({ userData }) {
+function FriendsPage() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const [rawFriendsData, setRawFriendsData] = useState([]);
@@ -31,9 +31,10 @@ function FriendsPage({ userData }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
+            {/* Main Content */}
             <div className="container mx-auto py-8 px-4">
                 <div className="bg-white rounded-lg mt-20 shadow-md p-6 mb-6">
-                    <h1 className="text-2xl font-bold mb-2">Hi, {userData.name}!</h1>
+                    <h1 className="text-2xl font-bold mb-2">Hi, Aditya! </h1>
                     <p className="text-gray-600">Here are your friends</p>
                 </div>
 

@@ -1,3 +1,4 @@
 node_modules/
 /auth_splitwise/secret.js
 server/.env
+.env
