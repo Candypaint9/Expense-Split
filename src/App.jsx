@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import axios from 'axios';
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import Landing from './components/Landing'
@@ -8,36 +7,35 @@ import FriendsPage from './components/FriendsList'
 import Profile from './components/Profile'
 import Activity from './components/Activity'
 import LoginPage from './components/Login'
-import SignupPage from './components/Signup'
+import SignupPage from './components/Signup'        
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    upiId: "",
+    qrCode: null,
+    balance: {
+      totalOwed: 0,
+      totalOwe: 0
+    }
+  });
 
-    useEffect(() => {
-      // Call backend to check auth
-      axios.get('http://localhost:5000/api/check-auth', {
-        withCredentials: true // send cookie
-      })
-        .then(() => setIsLoggedIn(true))
-        .catch(() => setIsLoggedIn(false));
-    }, []);
-    return (
-        <Router>
-            {/* Pass isLoggedIn dynamically later */}
-            <Navbar isLoggedIn={isLoggedIn} />
-
-            <Routes>
-                <Route path="/" element={<Navigate to="/landing" replace />} />
-                <Route path="/landing" element={<Landing />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="/friends" element={<FriendsPage />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/activity" element={<Activity />} />
-                <Route path="/logout" element={<Landing />} />
-            </Routes>
-        </Router>
-    )
+  return (
+    <Router>
+      <Navbar isLoggedIn={false} />
+      <Routes>
+        <Route path="/" element={<Landing userData={userData} />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />  
+        <Route path="/friends" element={<FriendsPage userData={userData} />} />
+        <Route path="/profile" element={<Profile userData={userData} setUserData={setUserData} />} />
+        <Route path="/activity" element={<Activity />} />
+        <Route path="/logout" element={<Landing userData={userData} />} />
+      </Routes>
+    </Router>
+  )
 }
 
 export default App
