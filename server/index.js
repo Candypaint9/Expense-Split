@@ -24,8 +24,10 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
+
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+
 
 app.get("/api/groupCards", (req, res) => {
   Group.find()

@@ -14,7 +14,7 @@ function LoginPage() {
             const res = await axios.post('/api/login', {
                 email,
                 password
-            });
+            },{withCredentials:true});
 
             console.log("Login success:", res.data.message);
             alert("Login successful!");
