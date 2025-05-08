@@ -21,7 +21,7 @@ export const getProfile = async (req, res) => {
     const userId = req.user.id;
 
     try {
-        const user = await User.findById(userId).select("name email upiId");
+        const user = await User.findById(userId).select("name email phone upiId");
 
         if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -103,3 +103,29 @@ export const addFriend = async (req, res) => {
       res.status(500).json({ message: 'Server error.' });
     }
   };
+
+
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { name, phone, upiId } = req.body;
+        if (!/^\d{10}$/.test(req.body.phone)) {//checks that phone number is 10 digits long
+            return res.status(400).json({ error: "Phone number must be exactly 10 digits" });
+        }
+
+        if (!name || !phone || !upiId) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { name, phone, upiId },
+            { new: true }//updatedUser now contains the new updated data..
+        );
+
+        res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
