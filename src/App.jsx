@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-
+import axios from 'axios';
 import Navbar from './components/Navbar'
 import Landing from './components/Landing'
 import FriendsPage from './components/FriendsList'
@@ -10,6 +10,7 @@ import LoginPage from './components/Login'
 import SignupPage from './components/Signup'        
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -21,10 +22,18 @@ function App() {
       totalOwe: 0
     }
   });
+  useEffect(() => {
+    // Call backend to check auth
+    axios.get('http://localhost:5000/api/check-auth', {
+      withCredentials: true // send cookie
+    })
+      .then(() => setIsLoggedIn(true))
+      .catch(() => setIsLoggedIn(false));
+  }, []);
 
   return (
     <Router>
-      <Navbar isLoggedIn={false} />
+      <Navbar isLoggedIn={isLoggedIn} />
       <Routes>
         <Route path="/" element={<Landing userData={userData} />} />
         <Route path="/login" element={<LoginPage />} />
