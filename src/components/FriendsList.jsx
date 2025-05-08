@@ -105,6 +105,7 @@ function FriendsPage({ userData }) {
                       <div>
                         <h3 className="font-bold text-lg">{friend.name}</h3>
                         <p className="text-gray-500 text-sm">{friend.email}</p>
+                        <p className="text-gray-500 text-sm">upi-ID: {friend.upiId}</p>
                       </div>
                     </div>
 
