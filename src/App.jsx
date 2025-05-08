@@ -25,14 +25,35 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-      axios.get('/api/check-auth', { withCredentials: true })
+      axios.get('/api/check-auth')
         .then(() => setIsLoggedIn(true))
         .catch(() => setIsLoggedIn(false));
     }, []);
+    const handleLogout = () => {
+      axios.post('/api/logout')
+          .then(() => {
+              setIsLoggedIn(false);
+              setUserData({
+                  name: "",
+                  email: "",
+                  phone: "",
+                  upiId: "",
+                  qrCode: null,
+                  balance: {
+                      totalOwed: 0,
+                      totalOwe: 0
+                  }
+              });
+              window.location.href = "/login"; // Redirect to login page
+          })
+          .catch((err) => {
+              console.error("Logout failed", err);
+          });
+  };
 
     return (
         <Router>
-            <Navbar isLoggedIn={isLoggedIn} />
+            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
             <Routes>
                 <Route path="/" element={<Navigate to="/landing" replace />} />
                 <Route path="/landing" element={<Landing userData={userData} />} />
