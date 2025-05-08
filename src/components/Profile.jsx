@@ -33,6 +33,7 @@ function Profile({ userData }) {
         e.preventDefault();
         try {
             await axios.post("/api/profile/update", {
+                name: profileData.name,
                 phone: profileData.phone,
                 upiId: profileData.upiId,
                 qrCode: profileData.qrCode,
@@ -63,60 +64,31 @@ function Profile({ userData }) {
             <div className="bg-white rounded-lg mt-10 shadow-md p-6 mb-6">
                 <h1 className="text-3xl font-bold mb-6">My Profile</h1>
 
-                {/* Balance Summary - COMMENTED OUT */}
-                {/*
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div className={`p-4 rounded-lg ${profileData.balance.totalOwed > profileData.balance.totalOwe ? "bg-green-100" : "bg-red-100"}`}>
-                        <h2 className="text-xl font-semibold mb-2">Overall Balance</h2>
-                        {profileData.balance.totalOwed > profileData.balance.totalOwe ? (
-                            <p className="text-2xl font-bold text-green-600">
-                                You are owed ₹{(profileData.balance.totalOwed - profileData.balance.totalOwe).toFixed(2)}
-                            </p>
+                {/* UPI QR Code */}
+                <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                    <h2 className="text-xl font-semibold mb-2">Payment QR Code</h2>
+                    <div className="flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-300 rounded-lg mb-2 bg-white">
+                        {profileData.qrCode ? (
+                            <img src={profileData.qrCode} alt="UPI QR Code" className="max-h-full" />
                         ) : (
-                            <p className="text-2xl font-bold text-red-600">
-                                You owe ₹{(profileData.balance.totalOwe - profileData.balance.totalOwed).toFixed(2)}
-                            </p>
+                            <div className="text-center p-4">
+                                <p className="text-gray-500 mb-2">No QR code uploaded</p>
+                                {isEditing && (
+                                    <label className="bg-green-500 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-green-600">
+                                        Upload QR Code
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            className="hidden"
+                                            onChange={handleQrUpload}
+                                        />
+                                    </label>
+                                )}
+                            </div>
                         )}
-                        <div className="mt-3 grid grid-cols-2 gap-2">
-                            <div className="bg-white p-3 rounded-md">
-                                <p className="text-sm text-gray-600">Total you owe</p>
-                                <p className="text-lg font-semibold text-red-500">₹{profileData.balance.totalOwe.toFixed(2)}</p>
-                            </div>
-                            <div className="bg-white p-3 rounded-md">
-                                <p className="text-sm text-gray-600">Total you're owed</p>
-                                <p className="text-lg font-semibold text-green-500">₹{profileData.balance.totalOwed.toFixed(2)}</p>
-                            </div>
-                        </div>
                     </div>
-                */}
-
-                    {/* UPI QR Code */}
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <h2 className="text-xl font-semibold mb-2">Payment QR Code</h2>
-                        <div className="flex flex-col items-center justify-center h-40 border-2 border-dashed border-gray-300 rounded-lg mb-2 bg-white">
-                            {profileData.qrCode ? (
-                                <img src={profileData.qrCode} alt="UPI QR Code" className="max-h-full" />
-                            ) : (
-                                <div className="text-center p-4">
-                                    <p className="text-gray-500 mb-2">No QR code uploaded</p>
-                                    {isEditing && (
-                                        <label className="bg-green-500 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-green-600">
-                                            Upload QR Code
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                className="hidden"
-                                                onChange={handleQrUpload}
-                                            />
-                                        </label>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                        <p className="text-sm text-gray-600 text-center">Share your QR code to receive payments</p>
-                    </div>
-                {/* </div> END grid container of balance + QR */}
-
+                    <p className="text-sm text-gray-600 text-center">Share your QR code to receive payments</p>
+                </div>
 
                 {/* Personal Information */}
                 <div className="bg-gray-50 rounded-lg p-6">
@@ -136,12 +108,23 @@ function Profile({ userData }) {
                     <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                {/* Name - readonly */}
+                                {/* Name */}
                                 <div className="mb-4">
                                     <label className="block text-gray-600 text-sm font-medium mb-1">Name</label>
-                                    <div className="bg-white p-3 rounded-md border border-gray-200">
-                                        {userData.name || "Not set"}
-                                    </div>
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={profileData.name || ""}
+                                            onChange={handleInputChange}
+                                            className="w-full p-3 rounded-md border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                            required
+                                        />
+                                    ) : (
+                                        <div className="bg-white p-3 rounded-md border border-gray-200">
+                                            {userData.name || "Not set"}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Email - readonly */}
