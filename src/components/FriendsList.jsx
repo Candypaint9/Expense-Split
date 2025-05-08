@@ -120,31 +120,11 @@ function FriendsPage({ userData }) {
 
                                             {/* Actions */}
                                             <div className="flex space-x-1">
-                                                <button className="text-gray-500 hover:text-green-500 p-1">
-                                                    <FiEdit2 className="h-5 w-5" />
-                                                </button>
                                                 <button className="text-gray-500 hover:text-red-500 p-1">
                                                     <FiTrash2 className="h-5 w-5" />
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    {/* Mobile view for balance - only visible on small screens */}
-                                    <div className="mt-2 md:hidden">
-                                        {friend.netBalance > 0 && (
-                                            <p className="text-green-600 font-semibold">
-                                                Gets back ${friend.netBalance.toFixed(2)}
-                                            </p>
-                                        )}
-                                        {friend.netBalance < 0 && (
-                                            <p className="text-red-600 font-semibold">
-                                                Owes ${Math.abs(friend.netBalance).toFixed(2)}
-                                            </p>
-                                        )}
-                                        {friend.netBalance === 0 && (
-                                            <p className="text-gray-600">Settled up</p>
-                                        )}
                                     </div>
                                 </li>
                             ))}
