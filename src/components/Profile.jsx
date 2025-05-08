@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios";
 
 function Profile({ userData, setUserData }) {
     const [isEditing, setIsEditing] = useState(false);

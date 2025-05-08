@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
-import axios from 'axios';
+import axios from '../axios';
 import { useNavigate } from 'react-router-dom';
 import FriendsSelectionPopup from "./FriendsSelectionPopup";
 import CreateGroupModal from "./CreateGroupModal";

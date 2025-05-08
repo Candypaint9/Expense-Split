@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { FiX } from "react-icons/fi";
-import axios from 'axios';
+import axios from '../axios';
 
 const CreateGroupModal = ({ isOpen, onClose, selectedFriends, onGroupCreated }) => {
   const [groupName, setGroupName] = useState('');
