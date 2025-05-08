@@ -14,7 +14,7 @@ function LoginPage() {
             const res = await axios.post('/api/login', {
                 email,
                 password
-            },{withCredentials:true});
+            },{withCredentials:true});//with credentials so that frontend also sends cookie everytime
 
             console.log("Login success:", res.data.message);
             alert("Login successful!");
