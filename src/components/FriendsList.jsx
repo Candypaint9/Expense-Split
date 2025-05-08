@@ -47,7 +47,7 @@ function FriendsPage({ userData }) {
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold">My Friends</h2>
                     <button 
-                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md flex items-center"
+                        className="bg-green-500 cursor-pointer hover:bg-green-600 text-white px-4 py-2 rounded-md flex items-center"
                         onClick={() => setIsAddFriendModalOpen(true)}
                     >
                         <FiPlus className="h-5 w-5 mr-1" />
