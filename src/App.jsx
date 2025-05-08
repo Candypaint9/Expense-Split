@@ -57,7 +57,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Navigate to="/landing" replace />} />
                 <Route path="/landing" element={<Landing userData={userData} />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="/login" element={<LoginPage onLoginSuccess={() => setIsLoggedIn(true)} />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/friends" element={<FriendsPage userData={userData} />} />
                 <Route path="/profile" element={<Profile userData={userData} setUserData={setUserData} />} />

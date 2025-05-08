@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "../axios"
 
-function LoginPage() {
+function LoginPage({onLoginSuccess}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
@@ -18,6 +18,10 @@ function LoginPage() {
 
             console.log("Login success:", res.data.message);
             alert("Login successful!");
+
+            //call parent handler to update login state
+            if(onLoginSuccess) onLoginSuccess();
+            
             navigate('/landing');
         } catch (err) {
             if (err.response) {
