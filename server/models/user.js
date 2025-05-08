@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
             ref: "User",
         },
     ],
+    groups: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
+      }],
 });
 
 //password is stored as a hash to prevent theft
@@ -58,6 +62,14 @@ userSchema.pre("save", async function (next) {
 //   }
 //   throw Error('Incorrect email');
 // }
-
+// Method to check if another user is a friend
+userSchema.methods.isFriend = function(userId) {
+    return this.friends.some(friendId => friendId.toString() === userId.toString());
+  };
+  
+  // Method to get all user's groups
+  userSchema.methods.getGroups = async function() {
+    return await mongoose.model('Group').find({ _id: { $in: this.groups }}).populate('members', 'name email');
+  };
 const User = mongoose.model("User", userSchema);
 export default User;
