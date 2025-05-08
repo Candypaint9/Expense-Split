@@ -56,7 +56,7 @@ function Navbar({ isLoggedIn, handleLogout }) {
                 <div className="flex space-x-10 items-center">
                     <Link 
                         to="/" 
-                        className={isActive("/") ? activeLinkClass : normalLinkClass}
+                        className={isActive("/landing") ? activeLinkClass : normalLinkClass}
                     >
                         <IoHomeOutline />
                         Groups
