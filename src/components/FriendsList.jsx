@@ -10,8 +10,8 @@ function FriendsPage({ userData }) {
     const [rawFriendsData, setRawFriendsData] = useState([]);
     useEffect(() => {
         axios.get('/api/friends')
-        .then((response) => setRawFriendsData(response.data))
-        .catch((error) => console.error("Error fetching friends:", error));
+            .then((response) => setRawFriendsData(response.data))
+            .catch((error) => console.error("Error fetching friends:", error));
     }, []);
 
     // Process friend data to calculate net balance
@@ -46,8 +46,9 @@ function FriendsPage({ userData }) {
                 {/* Friends Management */}
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold">My Friends</h2>
-                    <button 
-                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md flex items-center"
+                    <h2 className="text-xl font-bold">My Friends</h2>
+                    <button
+                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md flex items-center cursor-pointer"
                         onClick={() => setIsAddFriendModalOpen(true)}
                     >
                         <FiPlus className="h-5 w-5 mr-1" />
@@ -112,10 +113,10 @@ function FriendsPage({ userData }) {
 
                                             {/* Actions */}
                                             <div className="flex space-x-1">
-                                                <button className="text-gray-500 hover:text-green-500 p-1">
+                                                <button className="text-gray-500 hover:text-green-500 p-1 cursor-pointer">
                                                     <FiEdit2 className="h-5 w-5" />
                                                 </button>
-                                                <button className="text-gray-500 hover:text-red-500 p-1">
+                                                <button className="text-gray-500 hover:text-red-500 p-1 cursor-pointer">
                                                     <FiTrash2 className="h-5 w-5" />
                                                 </button>
                                             </div>
@@ -144,7 +145,7 @@ function FriendsPage({ userData }) {
                     ) : (
                         <div className="p-6 text-center">
                             <p className="text-gray-600">
-                                {searchTerm 
+                                {searchTerm
                                     ? `No friends found matching "${searchTerm}"`
                                     : "You don't have any friends yet. Add some friends to get started!"}
                             </p>
@@ -153,7 +154,7 @@ function FriendsPage({ userData }) {
                 </div>
 
                 {/* Add Friend Modal */}
-                <AddFriendModal 
+                <AddFriendModal
                     isOpen={isAddFriendModalOpen}
                     onClose={() => setIsAddFriendModalOpen(false)}
                     onFriendAdded={handleFriendAdded}
