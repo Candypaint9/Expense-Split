@@ -46,3 +46,19 @@ export const getGroupCards = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch groups" });
     }
 };
+
+export const getUser = async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const user = await User.findById(userId).select("name email");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ name: user.name, email: user.email });
+    } catch (err) {
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+};

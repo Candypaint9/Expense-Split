@@ -14,42 +14,29 @@ function App() {
     const [userData, setUserData] = useState({
         name: "",
         email: "",
-        phone: "",
-        upiId: "",
-        qrCode: null,
-        balance: {
-            totalOwed: 0,
-            totalOwe: 0
-        }
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-      axios.get('/api/check-auth')
-        .then(() => setIsLoggedIn(true))
-        .catch(() => setIsLoggedIn(false));
+        // Fetch user profile to get name and email
+        axios.get('/api/user', { withCredentials: true })
+            .then((response) => {
+                setUserData(response.data);
+                setIsLoggedIn(true);
+            })
+            .catch(() => setIsLoggedIn(false));
     }, []);
+
     const handleLogout = () => {
-      axios.post('/api/logout')
-          .then(() => {
-              setIsLoggedIn(false);
-              setUserData({
-                  name: "",
-                  email: "",
-                  phone: "",
-                  upiId: "",
-                  qrCode: null,
-                  balance: {
-                      totalOwed: 0,
-                      totalOwe: 0
-                  }
-              });
-              window.location.href = "/login"; // Redirect to login page
-          })
-          .catch((err) => {
-              console.error("Logout failed", err);
-          });
-  };
+        axios.post('/api/logout')
+            .then(() => {
+                setIsLoggedIn(false);
+                window.location.href = "/login"; // Redirect to login page
+            })
+            .catch((err) => {
+                console.error("Logout failed", err);
+            });
+    };
 
     return (
         <Router>
