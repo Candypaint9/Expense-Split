@@ -47,7 +47,7 @@ function App() {
                 <Route path="/login" element={<LoginPage onLoginSuccess={() => setIsLoggedIn(true)} />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/friends" element={<FriendsPage userData={userData} />} />
-                <Route path="/profile" element={<Profile userData={userData} setUserData={setUserData} />} />
+                <Route path="/profile" element={<Profile userData={userData}/>} />
                 <Route path="/activity" element={<Activity />} />
                 <Route path="/logout" element={<Landing userData={userData} />} />
             </Routes>

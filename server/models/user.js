@@ -6,22 +6,29 @@ import validator from "validator";
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Please enter the name"], //the error message when the requirement is not met
+        required: [true, "Please enter the name"],
     },
     email: {
         type: String,
         required: [true, "Please enter the email"],
         unique: true,
         lowercase: true,
-        validate: [validator.isEmail, "Please enter a valid email"], //uses third party vaildator,,passes the email value to the function  and if false will thorw the error message
+        validate: [validator.isEmail, "Please enter a valid email"],
     },
     password: {
         type: String,
         required: [true, "Please enter the password"],
-        //minlength: [6, "Minimum length of password should be 6"],
+    },
+    phone: {
+        type: String,
+        default: "",
     },
     upiId: {
         type: String,
+        default: "",
+    },
+    qrCode: {
+        type: String,  // Can store base64 image or image URL
         default: "",
     },
     friends: [
@@ -30,11 +37,14 @@ const userSchema = new mongoose.Schema({
             ref: "User",
         },
     ],
-    groups: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Group'
-      }],
+    groups: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Group'
+        }
+    ],
 });
+
 
 //password is stored as a hash to prevent theft
 userSchema.pre("save", async function (next) {
