@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiMail, FiX, FiCheck, FiAlertCircle } from "react-icons/fi";
-import axios from 'axios';
+import axios from '../axios';
 
 function AddFriendModal({ isOpen, onClose, onFriendAdded }) {
   const [email, setEmail] = useState("");

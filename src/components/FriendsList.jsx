@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiPlus, FiSearch, FiEdit2, FiTrash2 } from "react-icons/fi";
-import axios from 'axios';
+import axios from '../axios';
 import AddFriendModal from "./AddFriendModal";
 
 function FriendsPage({ userData }) {
