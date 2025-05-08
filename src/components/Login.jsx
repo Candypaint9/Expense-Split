@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from "axios"
+import axios from "../axios"
 
 function LoginPage() {
     const [email, setEmail] = useState('')
@@ -14,7 +14,7 @@ function LoginPage() {
             const res = await axios.post('/api/login', {
                 email,
                 password
-            },{withCredentials:true});//with credentials so that frontend also sends cookie everytime
+            });//with credentials so that frontend also sends cookie everytime
 
             console.log("Login success:", res.data.message);
             alert("Login successful!");

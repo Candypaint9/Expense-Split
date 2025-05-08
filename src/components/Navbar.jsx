@@ -14,10 +14,11 @@ function Navbar({ isLoggedIn }) {
 
     // determine if a link is active
     const isActive = (path) => {
-        if (path === "/" && currentPath === "/") {
-            return true;
+        if (path === "/") {
+            // Check for both root, /landing, and Groups link
+            return currentPath === "/" || currentPath === "/landing";
         }
-        return path !== "/" && currentPath.startsWith(path);
+        return currentPath.startsWith(path);
     };
 
     // Active link styling
@@ -86,7 +87,7 @@ function Navbar({ isLoggedIn }) {
                     </Link>
 
                     {authLink}
-                </div>
+                </div>  
             </div>
         </div>
     );
