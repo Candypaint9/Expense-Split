@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Profile({ userData, setUserData }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState(userData);
+    const [formData, setFormData] = useState(null);
     const navigate = useNavigate();
-
-    // Update formData when userData changes
-    useEffect(() => {
-        setFormData(userData);
-    }, [userData]);
 
     useEffect(() => {
         axios.get("/api/profile", { withCredentials: true })
             .then((res) => {
-                //setUserData(res.data);       // Set full profile data
-                //setFormData(res.data);
+                setUserData(res.data);
+                setFormData(res.data);
             })
             .catch((error) => {
                 if (error.response?.status === 401) {
-                    navigate("/login");      // Not authenticated
+                    navigate("/login");
                 } else {
                     console.error("Unexpected error:", error);
                 }
             });
-    }, [navigate, setUserData]);    
+    }, [navigate, setUserData]);
 
+    useEffect(() => {
+        setFormData(userData);
+    }, [userData]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -51,6 +50,11 @@ function Profile({ userData, setUserData }) {
             reader.readAsDataURL(file);
         }
     };
+
+    // ✅ Guard clause
+    if (!userData || !userData.balance || !formData) {
+        return <div className="text-center mt-20 text-gray-600">Loading profile...</div>;
+    }
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -131,7 +135,7 @@ function Profile({ userData, setUserData }) {
                                         <input
                                             type="text"
                                             name="name"
-                                            value={formData.name}
+                                            value={formData.name || ""}
                                             onChange={handleInputChange}
                                             className="w-full p-3 rounded-md border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                             required
@@ -149,7 +153,7 @@ function Profile({ userData, setUserData }) {
                                         <input
                                             type="email"
                                             name="email"
-                                            value={formData.email}
+                                            value={formData.email || ""}
                                             onChange={handleInputChange}
                                             className="w-full p-3 rounded-md border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                             required
@@ -169,7 +173,7 @@ function Profile({ userData, setUserData }) {
                                         <input
                                             type="tel"
                                             name="phone"
-                                            value={formData.phone}
+                                            value={formData.phone || ""}
                                             onChange={handleInputChange}
                                             className="w-full p-3 rounded-md border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                             required
@@ -187,7 +191,7 @@ function Profile({ userData, setUserData }) {
                                         <input
                                             type="text"
                                             name="upiId"
-                                            value={formData.upiId}
+                                            value={formData.upiId || ""}
                                             onChange={handleInputChange}
                                             className="w-full p-3 rounded-md border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                             required
