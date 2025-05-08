@@ -7,7 +7,7 @@ import { FiLogOut } from "react-icons/fi";
 import { FiLogIn } from "react-icons/fi";
 import { GrTransaction } from "react-icons/gr";
 
-function Navbar({ isLoggedIn }) {
+function Navbar({ isLoggedIn, handleLogout }) {
     // Get current location to determine active page
     const location = useLocation();
     const currentPath = location.pathname;
@@ -29,13 +29,13 @@ function Navbar({ isLoggedIn }) {
 
     if (isLoggedIn) {
         authLink = (
-            <Link 
-                to="/logout" 
+            <button
+                onClick={handleLogout}
                 className={isActive("/logout") ? activeLinkClass : normalLinkClass + " ml-100 mr-3"}
             >
                 <FiLogOut />
                 Logout
-            </Link>
+            </button>
         );
     } else {
         authLink = (
@@ -56,7 +56,7 @@ function Navbar({ isLoggedIn }) {
                 <div className="flex space-x-10 items-center">
                     <Link 
                         to="/" 
-                        className={isActive("/") ? activeLinkClass : normalLinkClass}
+                        className={isActive("/landing") ? activeLinkClass : normalLinkClass}
                     >
                         <IoHomeOutline />
                         Groups

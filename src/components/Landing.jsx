@@ -1,12 +1,14 @@
 
 import React, { useState, useEffect } from "react";
-import { FiPlus, FiCheck } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import FriendsSelectionPopup from "./FriendsSelectionPopup";
 import CreateGroupModal from "./CreateGroupModal";
 
 function Landing({ userData }) {
+    
     const navigate = useNavigate();
     const [expenseGroups, setExpenseGroups] = useState([]);
     const [isFriendsPopupOpen, setIsFriendsPopupOpen] = useState(false);
@@ -16,9 +18,15 @@ function Landing({ userData }) {
     const [loading, setLoading] = useState(false);
     
     useEffect(() => {
-        axios.get('/api/groupCards')
+        axios
+            .get("/api/groupCards", { withCredentials: true })
             .then((response) => setExpenseGroups(response.data))
-            .catch((error) => console.error("Error fetching groups:", error));
+            .catch((error) => {
+                console.error("Error fetching groups:", error);
+                if (error.response && error.response.status === 401) {
+                    navigate("/login");
+                }
+            });
     }, []);
     
     const handleCreateGroup = () => {

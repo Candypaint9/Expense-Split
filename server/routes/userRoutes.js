@@ -1,9 +1,10 @@
 import express from "express";
-import { getFriends } from "../controllers/userController.js";
-import { authenticateToken } from "../middleware/authmiddleware.js";
+import { getFriends, getProfile, getGroupCards } from "../controllers/userController.js";
 
 const router = express.Router();
 
-router.get("/friends", authenticateToken, getFriends);
+router.get("/friends", getFriends);
+router.get("/profile", getProfile);
+router.get("/groupCards", getGroupCards);
 
 export default router;
