@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
-import axios from '../axios';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Landing({ userData }) {
+    
+    const navigate = useNavigate();
     const [expenseGroups, setExpenseGroups] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/groupCards')
-        .then((response) => setExpenseGroups(response.data))
-        .catch((error) => console.error("Error fetching groups:", error));
+        axios
+            .get("/api/groupCards", { withCredentials: true })
+            .then((response) => setExpenseGroups(response.data))
+            .catch((error) => {
+                console.error("Error fetching groups:", error);
+                if (error.response && error.response.status === 401) {
+                    navigate("/login");
+                }
+            });
     }, []);
 
     return (

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiPlus, FiSearch, FiEdit2, FiTrash2 } from "react-icons/fi";
 import axios from '../axios';
 import AddFriendModal from "./AddFriendModal";
@@ -8,11 +9,18 @@ function FriendsPage({ userData }) {
     const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
 
     const [rawFriendsData, setRawFriendsData] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
-        axios.get('/api/friends')
+        axios.get('/api/friends', { withCredentials: true })
             .then((response) => setRawFriendsData(response.data))
-            .catch((error) => console.error("Error fetching friends:", error));
-    }, []);
+            .catch((error) => {
+                console.error("Error fetching friends:", error);
+                if (error.response && error.response.status === 401) {
+                    navigate("/login");
+                }
+            });
+    }, [navigate]);
 
     // Process friend data to calculate net balance
     const friendsData = rawFriendsData.map(friend => {
