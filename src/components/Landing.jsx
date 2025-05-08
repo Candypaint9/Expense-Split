@@ -18,7 +18,7 @@ function Landing({ userData }) {
     
     useEffect(() => {
         axios
-            .get("/api/groupCards", { withCredentials: true })
+            .get("/api/groupCards")
             .then((response) => setExpenseGroups(response.data))
             .catch((error) => {
                 console.error("Error fetching groups:", error);
