@@ -11,20 +11,20 @@ function Profile({ userData, setUserData }) {
         setFormData(userData);
     }, [userData]);
 
-    // useEffect(() => {
-    //     axios.get("/api/profile", { withCredentials: true })
-    //         .then((res) => {
-    //             setUserData(res.data);       // Set full profile data
-    //             setFormData(res.data);
-    //         })
-    //         .catch((error) => {
-    //             if (error.response?.status === 401) {
-    //                 navigate("/login");      // Not authenticated
-    //             } else {
-    //                 console.error("Unexpected error:", error);
-    //             }
-    //         });
-    // }, [navigate, setUserData]);    
+    useEffect(() => {
+        axios.get("/api/profile", { withCredentials: true })
+            .then((res) => {
+                //setUserData(res.data);       // Set full profile data
+                //setFormData(res.data);
+            })
+            .catch((error) => {
+                if (error.response?.status === 401) {
+                    navigate("/login");      // Not authenticated
+                } else {
+                    console.error("Unexpected error:", error);
+                }
+            });
+    }, [navigate, setUserData]);    
 
 
     const handleInputChange = (e) => {
