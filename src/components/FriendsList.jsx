@@ -111,7 +111,7 @@ function FriendsPage({ userData }) {
 
                     <div className="flex items-center space-x-4">
                       {/* Net Balance */}
-                      <div className="text-right hidden md:block">
+                      {/* <div className="text-right hidden md:block">
                         {friend.netBalance > 0 && (
                           <p className="text-green-600 font-semibold">
                             Gets back ${friend.netBalance.toFixed(2)}
@@ -125,11 +125,11 @@ function FriendsPage({ userData }) {
                         {friend.netBalance === 0 && (
                           <p className="text-gray-600">Settled up</p>
                         )}
-                      </div>
+                      </div> */}
 
                       {/* Actions */}
                       <div className="flex space-x-1">
-                        <button className="text-gray-500 hover:text-red-500 p-1">
+                        <button className="text-gray-500 cursor-pointer hover:text-red-500 p-1">
                           <FiTrash2 className="h-5 w-5" />
                         </button>
                       </div>
