@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import groupRoutes from "./routes/groupRoutes.js";
 import { authenticateToken } from "./middleware/authmiddleware.js";
 import Group from "./models/group.js";
 
@@ -32,6 +33,9 @@ app.use("/api", authenticateToken);
 
 // auth protected routes
 app.use("/api", userRoutes);
+
+// group routes
+app.use("/api/groups", groupRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);

@@ -33,7 +33,7 @@ export const createGroup = async (req, res) => {
     
     const group = new Group({
       name,
-      creator: creatorId,
+      createdBy: creatorId,
       members: allMembers,
       expenses: [],
       createdAt: new Date()

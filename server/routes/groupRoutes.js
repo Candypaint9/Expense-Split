@@ -9,18 +9,15 @@ import {
   removeMember,
   deleteGroup
 } from "../controllers/groupController.js";
-import auth from "../middleware/auth.js";
+import {authenticateToken} from "../middleware/authmiddleware.js";
 
 const router = express.Router();
 
 // All routes are protected with auth middleware
-router.use(auth);
+router.use(authenticateToken);
 
 // Create a new group
 router.post("/create", createGroup);
-
-// Get all groups for the logged-in user
-router.get("/", getUserGroups);
 
 // Get single group details
 router.get("/:groupId", getGroupDetails);
@@ -39,5 +36,8 @@ router.put("/:groupId/remove-member", removeMember);
 
 // Delete a group (only by creator)
 router.delete("/:groupId", deleteGroup);
+
+// Get all groups for the logged-in user
+router.get("/", getUserGroups);
 
 export default router;
