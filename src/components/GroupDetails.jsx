@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 
 const GroupDetails = () => {
-  const { groupId } = useParams();
+  const { id: groupId } = useParams();
   const navigate = useNavigate();
   const [group, setGroup] = useState(null);
   const [balances, setBalances] = useState([]);
@@ -19,6 +19,7 @@ const GroupDetails = () => {
     const fetchGroupDetails = async () => {
       try {
         setLoading(true);
+        // console.log(groupId);
         const response = await axios.get(`/api/groups/${groupId}`);
         setGroup(response.data.group);
         setBalances(response.data.balances);

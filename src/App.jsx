@@ -9,6 +9,7 @@ import Profile from './components/Profile'
 import Activity from './components/Activity'
 import LoginPage from './components/Login'
 import SignupPage from './components/Signup'
+import GroupDetail from './components/GroupDetails';
 
 function App() {
     const [userData, setUserData] = useState({
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/profile" element={<Profile userData={userData}/>} />
                 <Route path="/activity" element={<Activity />} />
                 <Route path="/logout" element={<Landing userData={userData} />} />
+                <Route path="/groups/:id" element={<GroupDetail />} />
             </Routes>
         </Router>
     )

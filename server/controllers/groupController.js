@@ -81,39 +81,51 @@ export const getUserGroups = async (req, res) => {
 
 // Get single group details
 export const getGroupDetails = async (req, res) => {
-    const { groupId } = req.params;
-    const userId = req.user.id;
+  const { groupId } = req.params;  
+  const userId = req.user.id;
 
-    try {
-        const group = await Group.findById(groupId)
-            .populate('members', 'name email')
-            .populate({
-                path: 'expenses',
-                populate: [
-                    { path: 'paidBy', select: 'name email' },
-                    { path: 'splitAmong', select: 'name email' }
-                ]
-            });
+  // Validate if groupId is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(groupId)) {
+    return res.status(400).json({ message: "Invalid group ID format" });
+  }
 
-        if (!group) {
-            return res.status(404).json({ message: "Group not found" });
-        }
+  try {
+    const group = await Group.findById(groupId)
+      .populate('members', 'name email')
+      .populate({
+        path: 'transactions',  // populating transactions
+        populate: [
+          {
+            path: 'paidBy.payer',  // Populate 'payer' inside 'paidBy'
+            select: 'name email',
+          },
+          {
+            path: 'splitBetween.user',  // Populate 'user' inside 'splitBetween'
+            select: 'name email',
+          }
+        ]
+      });
 
-        // Check if user is a member of this group
-        if (!group.members.some(member => member._id.toString() === userId)) {
-            return res.status(403).json({ message: "Not authorized to view this group" });
-        }
-
-        // Calculate balances for each member
-        const balances = calculateGroupBalances(group);
-
-        res.status(200).json({
-            group,
-            balances
-        });
-    } catch (err) {
-        res.status(500).json({ message: "Server error", error: err.message });
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
     }
+
+    // Check if the user is a member of the group
+    if (!group.members.some(member => member._id.toString() === userId)) {
+      return res.status(403).json({ message: "Not authorized to view this group" });
+    }
+
+    // Calculate balances for each member
+    const balances = calculateGroupBalances(group);
+
+    res.status(200).json({ 
+      group,
+      balances,
+    });
+  } catch (err) {
+    console.error("Error retrieving group details:", err);  // More detailed logging
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
 };
 
 // Add an expense to a group
