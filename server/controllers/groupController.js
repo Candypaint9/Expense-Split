@@ -81,51 +81,45 @@ export const getUserGroups = async (req, res) => {
 
 // Get single group details
 export const getGroupDetails = async (req, res) => {
-  const { groupId } = req.params;  
-  const userId = req.user.id;
+    const { groupId } = req.params;
+    const userId = req.user.id;
 
-  // Validate if groupId is a valid ObjectId
-  if (!mongoose.Types.ObjectId.isValid(groupId)) {
-    return res.status(400).json({ message: "Invalid group ID format" });
-  }
-
-  try {
-    const group = await Group.findById(groupId)
-      .populate('members', 'name email')
-      .populate({
-        path: 'transactions',  // populating transactions
-        populate: [
-          {
-            path: 'paidBy.payer',  // Populate 'payer' inside 'paidBy'
-            select: 'name email',
-          },
-          {
-            path: 'splitBetween.user',  // Populate 'user' inside 'splitBetween'
-            select: 'name email',
-          }
-        ]
-      });
-
-    if (!group) {
-      return res.status(404).json({ message: "Group not found" });
+    // Validate if groupId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(groupId)) {
+        return res.status(400).json({ message: "Invalid group ID format" });
     }
 
-    // Check if the user is a member of the group
-    if (!group.members.some(member => member._id.toString() === userId)) {
-      return res.status(403).json({ message: "Not authorized to view this group" });
+    try {
+        const group = await Group.findById(groupId)
+            .populate('members', 'name email')
+            .populate({
+                path: 'expenses',               // renamed from transactions
+                populate: {
+                    path: 'paidBy',               // directly populate the ObjectId
+                    select: 'name email'
+                }
+            });
+
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+
+        // Check if the user is a member of the group
+        if (!group.members.some(member => member._id.toString() === userId)) {
+            return res.status(403).json({ message: "Not authorized to view this group" });
+        }
+
+        // Calculate balances for each member
+        const balances = calculateGroupBalances(group);
+
+        res.status(200).json({
+            group,
+            balances,
+        });
+    } catch (err) {
+        console.error("Error retrieving group details:", err);  // More detailed logging
+        res.status(500).json({ message: "Server error", error: err.message });
     }
-
-    // Calculate balances for each member
-    const balances = calculateGroupBalances(group);
-
-    res.status(200).json({ 
-      group,
-      balances,
-    });
-  } catch (err) {
-    console.error("Error retrieving group details:", err);  // More detailed logging
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
 };
 
 // Add an expense to a group
@@ -203,7 +197,7 @@ export const addExpense = async (req, res) => {
         await expense.save();
 
         // Add expense to the group
-        group.transactions.push(expense._id);
+        group.expenses.push(expense._id);
         group.updateBalances(paidBy, shares);
         await group.save();
 
@@ -393,56 +387,60 @@ export const deleteGroup = async (req, res) => {
 };
 
 // Helper function to calculate balances within a group
-function calculateGroupBalances(group) {
-    const balances = {};
 
-    // Initialize balances for all members
+/**
+ * Given a group with populated members and expenses, returns an array of
+ * balances (paid, owed, netBalance) for each member.
+ */
+function calculateGroupBalances(group) {
+    // Initialize a map of userId → { paid, owed, netBalance }
+    const balancesMap = {};
     group.members.forEach(member => {
-        const memberId = member._id || member;
-        balances[memberId.toString()] = {
-            userId: memberId,
+        const id = (member._id || member).toString();
+        balancesMap[id] = {
+            userId: id,
             paid: 0,
             owed: 0,
             netBalance: 0
         };
     });
 
-    // Calculate balances based on expenses
-    if (group.expenses && group.expenses.length > 0) {
+    // tally paid & owed across all expenses
+    if (Array.isArray(group.expenses)) {
         group.expenses.forEach(expense => {
-            const paidById = expense.paidBy._id || expense.paidBy;
-            const paidByIdStr = paidById.toString();
+            const payerId = (expense.paidBy._id || expense.paidBy).toString();
+            const amt = parseFloat(expense.amount) || 0;
+            // Add to what the payer has fronted
+            balancesMap[payerId].paid += amt;
 
-            // Add to amount paid for the payer
-            balances[paidByIdStr].paid += parseFloat(expense.amount);
-
-            // Calculate what each person owes
             if (expense.splitType === 'equal') {
-                const splitAmong = expense.splitAmong;
-                const perPersonAmount = parseFloat(expense.amount) / splitAmong.length;
-
-                splitAmong.forEach(personId => {
-                    const personIdStr = (personId._id || personId).toString();
-                    balances[personIdStr].owed += perPersonAmount;
+                // Equal split among splitAmong[]
+                const splitCount = expense.splitAmong.length;
+                const share = splitCount > 0 ? amt / splitCount : 0;
+                expense.splitAmong.forEach(u => {
+                    const uid = (u._id || u).toString();
+                    if (balancesMap[uid]) {
+                        balancesMap[uid].owed += share;
+                    }
                 });
-            } else if (expense.splitType === 'custom' || expense.splitType === 'settlement') {
-                // For custom splits and settlements, use the shares
-                Object.entries(expense.shares).forEach(([personId, amount]) => {
-                    if (balances[personId]) {
-                        balances[personId].owed += parseFloat(amount);
+            } else {
+                // Custom or settlement: use expense.shares map
+                Object.entries(expense.shares).forEach(([uid, shareAmt]) => {
+                    if (balancesMap[uid]) {
+                        balancesMap[uid].owed += parseFloat(shareAmt) || 0;
                     }
                 });
             }
         });
     }
 
-    // Calculate net balance for each member
-    Object.keys(balances).forEach(memberId => {
-        balances[memberId].netBalance = balances[memberId].paid - balances[memberId].owed;
+    Object.values(balancesMap).forEach(b => {
+        b.netBalance = b.paid - b.owed;
     });
 
-    return Object.values(balances);
+    return Object.values(balancesMap);
 }
+
 
 // Helper function to generate a settlement plan
 function generateSettlementPlan(balances) {
