@@ -11,32 +11,21 @@ const expenseSchema = new mongoose.Schema({
         required: true,
         min: 0,
     },
-    paidBy: [
-        {
-            payer: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-                required: true,
-            },
-            amount: {
-                type: Number,
-                required: true,
-            },
-        },
-    ],
-    splitBetween: [
-        {
-            user: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-                required: true,
-            },
-            share: {
-                type: Number,
-                required: true,
-            },
-        },
-    ],
+    paidBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    splitAmong: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }],
+    shares: {
+        type: Map,
+        of: Number,
+        default: {},
+    },
     splitType: {
         type: String,
         enum: ["equal", "custom", "percentage", "settlement"],
@@ -47,7 +36,7 @@ const expenseSchema = new mongoose.Schema({
         trim: true,
         default: "Other",
     },
-    createdAt: {
+    date: {
         type: Date,
         default: Date.now,
     },
@@ -61,10 +50,6 @@ const expenseSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    //   isSettlement: {
-    //     type: Boolean,
-    //     default: false
-    //   }
 });
 
 const Expense = mongoose.model("Expense", expenseSchema);
