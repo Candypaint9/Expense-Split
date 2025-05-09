@@ -252,23 +252,18 @@ export const settleUp = async (req, res) => {
 
     try {
         const group = await Group.findById(groupId);
-        if (!group) {
-            return res.status(404).json({ message: "Group not found" });
-        }
+        if (!group) return res.status(404).json({ message: 'Group not found' });
 
-        // Verify the user is part of the group
-        if (!group.members.includes(userId)) {
-            return res.status(403).json({ message: "Not authorized for this group" });
-        }
-
-        // Verify both payer and receiver are in the group
         if (!group.members.includes(payer) || !group.members.includes(receiver)) {
-            return res.status(400).json({ message: "Payer or receiver not in the group" });
+            return res.status(400).json({ message: 'Payer or receiver not in the group' });
         }
 
-        // Create a settlement expense
+        if (!group.isMember(userId)) {
+            return res.status(403).json({ message: 'Not authorized for this group' });
+        }
+
         const settlementExpense = new Expense({
-            description: "Settlement",
+            description: 'Settlement',
             amount: parseFloat(amount),
             paidBy: payer,
             splitAmong: [receiver],
@@ -279,19 +274,15 @@ export const settleUp = async (req, res) => {
             createdBy: userId,
             isSettlement: true
         });
-
         await settlementExpense.save();
 
-        // Add settlement to the group
         group.expenses.push(settlementExpense._id);
+        group.recordSettlement(payer, receiver, parseFloat(amount));
         await group.save();
 
-        res.status(200).json({
-            message: "Settlement recorded successfully",
-            settlement: settlementExpense
-        });
+        res.status(200).json({ message: 'Settlement recorded', settlement: settlementExpense });
     } catch (err) {
-        res.status(500).json({ message: "Server error", error: err.message });
+        res.status(500).json({ message: 'Server error', error: err.message });
     }
 };
 

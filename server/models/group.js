@@ -30,47 +30,49 @@ const groupSchema = new mongoose.Schema({
     }
 });
 
-// Add a method to check if a user is a member of the group
+// Check membership
 groupSchema.methods.isMember = function (userId) {
-    return this.members.some(member => member.toString() === userId.toString());
+    return this.members.some(m => m.toString() === userId.toString());
 };
 
-// // Add a method to get all balances within the group
-// groupSchema.methods.getBalances = function() {
-//   // Implementation would be in the controller for more complex logic
-// };
 
-// Add a method to update balances
 groupSchema.methods.updateBalances = function (paidBy, shares) {
-    if (!this.balances) {
-        this.balances = new Map();
-    }
-
-    for (const [debtorId, amount] of Object.entries(shares)) {
+    if (!this.balances) this.balances = new Map();
+    for (const [debtorId, amt] of Object.entries(shares)) {
         if (debtorId === paidBy) continue;
-
-        // Initialize maps if not already present
-        if (!this.balances.has(debtorId)) {
-            this.balances.set(debtorId, new Map());
-        }
-        if (!this.balances.has(paidBy)) {
-            this.balances.set(paidBy, new Map());
-        }
-
+        if (!this.balances.has(debtorId)) this.balances.set(debtorId, new Map());
+        if (!this.balances.has(paidBy)) this.balances.set(paidBy, new Map());
         const debtorMap = this.balances.get(debtorId);
         const creditorMap = this.balances.get(paidBy);
-
-        // Add debt
-        debtorMap.set(paidBy, (debtorMap.get(paidBy) || 0) + amount);
-
-        // Net reverse (optional)
-        creditorMap.set(debtorId, (creditorMap.get(debtorId) || 0) - amount);
+        debtorMap.set(paidBy, (debtorMap.get(paidBy) || 0) + amt);
+        creditorMap.set(debtorId, (creditorMap.get(debtorId) || 0) - amt);
     }
-
-    // Tell Mongoose the nested map was modified
     this.markModified('balances');
 };
 
+groupSchema.methods.recordSettlement = function (payer, receiver, amount) {
+    if (!this.balances) this.balances = new Map();
+
+    if (!this.balances.has(payer)) this.balances.set(payer, new Map());
+    if (!this.balances.has(receiver)) this.balances.set(receiver, new Map());
+
+    const payerMap = this.balances.get(payer);
+    const receiverMap = this.balances.get(receiver);
+
+    // Adjust payer's debt to receiver
+    const payerOwes = payerMap.get(receiver) || 0;
+    payerMap.set(receiver, payerOwes - amount);
+
+    // Adjust receiver's credit from payer
+    const receiverIsOwed = receiverMap.get(payer) || 0;
+    receiverMap.set(payer, receiverIsOwed + amount);
+
+    // If after settlement, balance is zero, clean up entries
+    if (payerMap.get(receiver) === 0) payerMap.delete(receiver);
+    if (receiverMap.get(payer) === 0) receiverMap.delete(payer);
+
+    this.markModified('balances');
+};
 
 const Group = mongoose.model('Group', groupSchema);
 export default Group;
