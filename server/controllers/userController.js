@@ -32,20 +32,17 @@ export const getProfile = async (req, res) => {
 };
 
 export const getGroupCards = async (req, res) => {
-    const userId = req.user.id;
-
-    try {
-        const groups = await Group.find({ members: userId });
-
-        if (!groups || groups.length === 0) {
-            return res.status(404).json({ message: "No groups found" });
-        }
-
-        res.json(groups);
-    } catch (err) {
-        res.status(500).json({ error: "Failed to fetch groups" });
-    }
+  const userId = req.user.id;
+  try {
+    const groups = await Group.find({ members: userId });
+    // Always return 200 + array, even if empty
+    return res.json(groups);
+  } catch (err) {
+    console.error("getGroupCards error:", err);
+    return res.status(500).json({ error: "Failed to fetch groups" });
+  }
 };
+
 
 export const getUser = async (req, res) => {
     const userId = req.user.id;

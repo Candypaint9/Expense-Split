@@ -62,13 +62,20 @@ function Landing({ userData }) {
 
         if (mounted) setGroups(enriched);
       } catch (err) {
-        console.error("Error fetching groups or details:", err);
-        if (err.response?.status === 401) navigate("/login");
-        else if (mounted) setError(err);
-      } finally {
-        mounted && setLoadingGroups(false);
+      if (err.response?.status === 404) {
+        // empty group returned if 404 which indicates no groups
+        if (mounted) setGroups([]);
+      } else if (err.response?.status === 401) {
+        navigate("/login");
+      } else {
+        console.error("Unexpected error fetching groups:", err);
+        if (mounted) setError(err);
       }
-    };
+      return;
+    } finally {
+      mounted && setLoadingGroups(false);
+    }
+  };
 
     load();
     return () => {
