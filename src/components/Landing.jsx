@@ -138,10 +138,10 @@ function Landing({ userData }) {
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">My Groups</h2>
               <button
-                className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-green-600"
+                className="bg-green-500 text-white px-4 py-2 cursor-pointer rounded-md flex items-center hover:bg-green-600"
                 onClick={handleCreateGroup}
               >
-                <FiPlus className="mr-2  cursor-pointer" /> Create Group
+                <FiPlus className="mr-2 cursor-pointer" /> Create Group
               </button>
             </div>
 
