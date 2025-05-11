@@ -94,13 +94,13 @@ const GroupDetails = () => {
                 <div>
                     <button
                         onClick={() => setShowAddExpense(!showAddExpense)}
-                        className="px-4 py-2 bg-green-600 text-white rounded-md mr-2"
+                        className="px-4 py-2 bg-green-600  cursor-pointer text-white rounded-md mr-2"
                     >
                         {showAddExpense ? 'Cancel' : 'Add Expense'}
                     </button>
                     <button
                         onClick={fetchSettlementPlan}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md"
+                        className="px-4 py-2  cursor-pointer bg-blue-600 text-white rounded-md"
                     >
                         Settle Up
                     </button>

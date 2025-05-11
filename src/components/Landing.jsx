@@ -141,7 +141,7 @@ function Landing({ userData }) {
                 className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-green-600"
                 onClick={handleCreateGroup}
               >
-                <FiPlus className="mr-2" /> Create Group
+                <FiPlus className="mr-2  cursor-pointer" /> Create Group
               </button>
             </div>
 

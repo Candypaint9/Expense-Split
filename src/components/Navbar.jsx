@@ -38,10 +38,10 @@ function Navbar({ isLoggedIn, handleLogout }) {
                         <CgProfile />
                         Profile
                     </Link>
-                    <Link to="/activity" className={isActive("/activity") ? activeLinkClass : normalLinkClass}>
+                    {/* <Link to="/activity" className={isActive("/activity") ? activeLinkClass : normalLinkClass}>
                         <GrTransaction />
                         Activity
-                    </Link>
+                    </Link> */}
                 </div>
 
                 <div>
