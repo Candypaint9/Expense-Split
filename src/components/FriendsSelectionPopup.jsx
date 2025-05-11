@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FiX, FiSearch, FiCheck } from "react-icons/fi";
-import axios from "../axios"; // Ensure this points to your configured Axios instance
+import axios from "../axios"; 
 
 const FriendsSelectionPopup = ({ isOpen, onClose, onConfirm }) => {
     const [friends, setFriends] = useState([]);
