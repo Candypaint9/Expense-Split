@@ -370,12 +370,12 @@ const AddExpenseModal = ({ groupId, members, onClose, onExpenseAdded }) => {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-lg shadow-xl p-6 mt-20 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-bold">Add New Expense</h2>
                     <button
                         onClick={onClose}
-                        className="text-gray-500 hover:text-gray-700"
+                        className="text-gray-500  hover:text-gray-700"
                     >
                         &times;
                     </button>
@@ -426,7 +426,7 @@ const AddExpenseModal = ({ groupId, members, onClose, onExpenseAdded }) => {
                             id="paidBy"
                             value={paidBy}
                             onChange={(e) => setPaidBy(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 cursor-pointer py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="">Select who paid</option>
                             {members.map((member) => (
@@ -445,7 +445,7 @@ const AddExpenseModal = ({ groupId, members, onClose, onExpenseAdded }) => {
                             id="category"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 border cursor-pointer border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="Other">Other</option>
                             <option value="Food">Food & Drink</option>
@@ -464,7 +464,7 @@ const AddExpenseModal = ({ groupId, members, onClose, onExpenseAdded }) => {
                             Split Type
                         </label>
                         <div className="flex space-x-4">
-                            <label className="flex items-center">
+                            <label className="flex items-center cursor-pointer">
                                 <input
                                     type="radio"
                                     name="splitType"
@@ -475,7 +475,7 @@ const AddExpenseModal = ({ groupId, members, onClose, onExpenseAdded }) => {
                                 />
                                 Equal
                             </label>
-                            <label className="flex items-center">
+                            <label className="flex items-center cursor-pointer">
                                 <input
                                     type="radio"
                                     name="splitType"
@@ -531,13 +531,13 @@ const AddExpenseModal = ({ groupId, members, onClose, onExpenseAdded }) => {
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 mr-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                            className="px-4 py-2 cursor-pointer mr-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed"
+                            className="px-4 py-2 cursor-pointer bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed"
                             disabled={loading}
                         >
                             {loading ? 'Adding...' : 'Add Expense'}
